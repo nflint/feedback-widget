@@ -109,6 +109,42 @@ interface FeedbackPayload {
 }
 ```
 
+## Deployment
+
+The widget is a single static file (`dist/feedback-widget.js`). Host it anywhere that serves static assets.
+
+### Azure
+
+**Static Web Apps** — Connect your GitHub repo, set the build output location to `dist/`, and it auto-deploys on push.
+
+**Blob Storage + CDN** — Upload `dist/feedback-widget.js` to a public blob container. Optionally put Azure CDN in front for caching and a custom domain.
+
+```html
+<script src="https://your-cdn.azureedge.net/feedback-widget.js"></script>
+```
+
+### AWS
+
+**S3 + CloudFront** — Upload `dist/feedback-widget.js` to an S3 bucket with static hosting enabled. Add a CloudFront distribution for HTTPS and caching.
+
+```html
+<script src="https://d1234abcdef.cloudfront.net/feedback-widget.js"></script>
+```
+
+**Amplify Hosting** — Connect your GitHub repo and set the build output directory to `dist/`.
+
+### Vercel / Netlify
+
+Connect your GitHub repo. Set the build command to `npm run build` and the output directory to `dist/`. Deploys automatically on push.
+
+### Self-hosted
+
+Copy `dist/feedback-widget.js` into your app's `public/` or `static/` folder and reference it with a relative path:
+
+```html
+<script src="/feedback-widget.js"></script>
+```
+
 ## Development
 
 ```bash
@@ -119,7 +155,7 @@ npm run build    # Build to dist/feedback-widget.js
 
 ## How It Works
 
-1. User clicks the red "Feedback" tab on the left edge of the page
+1. User clicks the red "Feedback" tab on the right edge of the page
 2. Selects a category (Bug, Enhancement, Question, Other)
 3. Fills in title, description, priority, and optional email
 4. Optionally captures and annotates a screenshot
