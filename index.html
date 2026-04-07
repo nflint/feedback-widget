@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback Widget Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1 { color: #1a1a2e; }
+    .card {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+    }
+    .card h3 { margin-top: 0; }
+    pre {
+      background: #1a1a2e;
+      color: #e0e0e0;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    #feedback-log {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 1rem;
+      min-height: 100px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Feedback Widget Demo</h1>
+  <p>This is a demo page to test the feedback widget. Click the floating button in the bottom-right corner to submit feedback.</p>
+
+  <div class="card">
+    <h3>Sample Content</h3>
+    <p>This card exists so you have something interesting to screenshot and annotate when testing the widget.</p>
+  </div>
+
+  <div class="card">
+    <h3>Another Section</h3>
+    <p>Try capturing a screenshot and using the annotation tools to highlight or redact parts of this page.</p>
+  </div>
+
+  <h2>Feedback Log</h2>
+  <p>Submitted feedback payloads will appear below:</p>
+  <div id="feedback-log">Waiting for feedback submissions...</div>
+
+  <!-- In dev: Vite serves the TS source. When opened directly: falls back to built file. -->
+  <script type="module" src="/src/index.ts"></script>
+  <script src="dist/feedback-widget.js"></script>
+  <script>
+    // Wait for FeedbackWidget to be available (from either source)
+    var check = setInterval(function() {
+      if (window.FeedbackWidget) {
+        clearInterval(check);
+        window.FeedbackWidget.init({
+          onSubmit: function(payload) {
+            var log = document.getElementById('feedback-log');
+            var entry = JSON.stringify(payload, function(key, value) {
+              if ((key === 'screenshot' || key === 'annotatedScreenshot') && typeof value === 'string' && value.length > 100) {
+                return value.substring(0, 80) + '... [truncated]';
+              }
+              return value;
+            }, 2);
+            log.textContent = entry;
+            console.log('Feedback submitted:', payload);
+          },
+        });
+      }
+    }, 100);
+  </script>
+</body>
+</html>
