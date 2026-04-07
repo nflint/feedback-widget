@@ -23,10 +23,10 @@ export function getWidgetStyles(primaryColor: string = '#6366f1'): string {
       padding: 0;
     }
 
-    /* Trigger Button — vertical left-side tab (Marker.io style) */
+    /* Trigger Button — vertical right-side tab (Marker.io style) */
     .fw-trigger {
       position: fixed;
-      left: 0;
+      right: 0;
       top: 50%;
       z-index: 2147483646;
       display: flex;
@@ -36,20 +36,20 @@ export function getWidgetStyles(primaryColor: string = '#6366f1'): string {
       background: #E5534B;
       color: white;
       border: none;
-      border-radius: 0 6px 6px 0;
+      border-radius: 6px 0 0 6px;
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
       font-family: inherit;
       letter-spacing: 0.5px;
       writing-mode: vertical-rl;
-      transform: translateY(-50%) rotate(180deg);
-      box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+      transform: translateY(-50%);
+      box-shadow: -2px 0 8px rgba(0,0,0,0.15);
       transition: padding 0.15s ease, box-shadow 0.15s ease;
     }
     .fw-trigger:hover {
       padding: 12px 10px;
-      box-shadow: 3px 0 12px rgba(0,0,0,0.25);
+      box-shadow: -3px 0 12px rgba(0,0,0,0.25);
     }
     .fw-trigger:active { padding: 12px 8px; }
     .fw-trigger svg { flex-shrink: 0; }
@@ -65,10 +65,10 @@ export function getWidgetStyles(primaryColor: string = '#6366f1'): string {
     }
     .fw-backdrop.visible { opacity: 1; }
 
-    /* Modal — opens from the left side */
+    /* Modal — opens from the right side */
     .fw-modal {
       position: fixed;
-      left: 50px;
+      right: 50px;
       top: 50%;
       z-index: 2147483647;
       width: 420px;
@@ -79,7 +79,7 @@ export function getWidgetStyles(primaryColor: string = '#6366f1'): string {
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transform: translateY(-50%) translateX(-10px) scale(0.97);
+      transform: translateY(-50%) translateX(10px) scale(0.97);
       opacity: 0;
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
